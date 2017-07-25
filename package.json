@@ -10,7 +10,8 @@
     "babel-node": "babel-node",
     "build": "NODE_ENV=prodution babel src --out-dir dist --source-maps inline",
     "prepublish": "npm run build",
-    "eslint": "eslint"
+    "eslint": "eslint",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
     "babel-cli": "^6.24.0",
     "babel-core": "^6.24.0",
     "babel-eslint": "^7.2.1",
+    "babel-jest": "^20.0.3",
     "babel-preset-env": "^1.3.2",
     "babel-preset-stage-0": "^6.22.0",
     "eslint": "^3.19.0",
