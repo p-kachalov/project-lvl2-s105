@@ -1,10 +1,10 @@
 {
   "name": "gendiff-pk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "tool to locate differences in the configuration files and create patches",
   "main": "dist/index.js",
   "bin": {
-    "gendiff": "dist/bin/gendiff"
+    "gendiff": "dist/bin/gendiff.js"
   },
   "scripts": {
     "babel-node": "babel-node",
