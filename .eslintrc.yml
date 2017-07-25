@@ -1,12 +1,8 @@
 env:
-  node:        true
-  jest:      true
+  node: true
+  jest: true
 
-parser:        babel-eslint
-
-parserOption:
-  ecmaVersion: 2015
-  sourceType:  module
+parser: babel-eslint
 
 extends:
   - 'airbnb-base'
