@@ -1,7 +1,7 @@
 {
   "name": "gendiff-pk",
   "version": "0.0.2",
-  "description": "tool to locate differences in the configuration files and create patches",
+  "description": "Compares two configuration files and shows a difference.",
   "main": "dist/index.js",
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
