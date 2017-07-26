@@ -7,5 +7,9 @@ export default () => program
         .arguments('<firstConfig> <secondConfig>')
         .description(description)
         .option('-f, --format [type]', 'Output format')
-        .action((first, second) => gendiff(first, second))
+        .action((first, second) => {
+          const result = gendiff(first, second);
+          console.log(result);
+          return result;
+        })
         .parse(process.argv);
