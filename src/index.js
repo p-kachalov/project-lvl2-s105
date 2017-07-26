@@ -1,11 +1,11 @@
 import program from 'commander';
 import gendiff from './gendiff';
-import setings from '../package.json';
+import { version, description } from '../package.json';
 
 export default () => program
-        .version(setings.version)
+        .version(version)
         .arguments('<firstConfig> <secondConfig>')
-        .description(setings.description)
+        .description(description)
         .option('-f, --format [type]', 'Output format')
         .action((first, second) => gendiff(first, second))
         .parse(process.argv);
