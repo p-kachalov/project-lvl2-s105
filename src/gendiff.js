@@ -12,7 +12,7 @@ class Difference {
   }
 }
 
-const makeString = (data) => {
+const makeResultString = (data) => {
   const result = `
 {
  ${data.map(item => item.toString()).join('\n ')}
@@ -21,33 +21,44 @@ const makeString = (data) => {
   return result;
 };
 
-export default (firstFile, secondFile) => {
-  const firstJson = JSON.parse(fs.readFileSync(firstFile));
-  const secondJson = JSON.parse(fs.readFileSync(secondFile));
-
-  const firstKeys = Object.keys(firstJson);
-  const secondKeys = Object.keys(secondJson);
+const makeDiffList = (firstObject, secondObject) => {
+  const firstKeys = Object.keys(firstObject);
+  const secondKeys = Object.keys(secondObject);
 
   const firstChanged = firstKeys.reduce((acc, key) => {
-    if (secondJson[key]) {
-      if (firstJson[key] === secondJson[key]) {
-        acc.push(new Difference(key, firstJson[key]));
+    if (secondObject[key]) {
+      if (firstObject[key] === secondObject[key]) {
+        acc.push(new Difference(key, secondObject[key]));
         return acc;
       }
-      acc.push(new Difference(key, secondJson[key], '+'));
-      acc.push(new Difference(key, firstJson[key], '-'));
+      acc.push(new Difference(key, secondObject[key], '+'));
+      acc.push(new Difference(key, firstObject[key], '-'));
       return acc;
     }
-    acc.push(new Difference(key, firstJson[key], '-'));
+    acc.push(new Difference(key, firstObject[key], '-'));
     return acc;
   }, []);
 
-  const secondAdded = secondKeys.reduce((acc, key) => {
-    if (firstJson[key]) return acc;
-    acc.push(new Difference(key, secondJson[key], '+'));
+  return secondKeys.reduce((acc, key) => {
+    if (firstObject[key]) return acc;
+    acc.push(new Difference(key, secondObject[key], '+'));
     return acc;
   }, firstChanged);
+};
 
-  const resultString = makeString(secondAdded);
+const getType = filename => filename.split('.').pop();
+
+const fileToObject = (file, type) => {
+  if (type === 'json') return JSON.parse(fs.readFileSync(file));
+  return {};
+};
+
+export default (firstFile, secondFile) => {
+  const firstObject = fileToObject(firstFile, getType(firstFile));
+  const secondObject = fileToObject(secondFile, getType(secondFile));
+
+  const diffList = makeDiffList(firstObject, secondObject);
+
+  const resultString = makeResultString(diffList);
   return resultString;
 };
