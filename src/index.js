@@ -1,13 +1,11 @@
 import fileToObject from './parser';
-import makeChangeList from './comparer';
-import makeResultString from './render';
+import buildDiffAst from './ast-builder';
+import render from './render';
 
 export default (firstFile, secondFile) => {
   const firstObject = fileToObject(firstFile);
   const secondObject = fileToObject(secondFile);
 
-  const changeList = makeChangeList(firstObject, secondObject);
-  const result = makeResultString(changeList);
-
-  return result;
+  const diffAst = buildDiffAst(firstObject, secondObject);
+  return render(diffAst);
 };
