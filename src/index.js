@@ -1,15 +1,13 @@
-import program from 'commander';
-import gendiff from './gendiff';
-import { version, description } from '../package.json';
+import fileToObject from './parser';
+import makeChangeList from './comparer';
+import makeResultString from './render';
 
-export default () => program
-        .version(version)
-        .arguments('<firstConfig> <secondConfig>')
-        .description(description)
-        .option('-f, --format [type]', 'Output format')
-        .action((first, second) => {
-          const result = gendiff(first, second);
-          console.log(result);
-          return result;
-        })
-        .parse(process.argv);
+export default (firstFile, secondFile) => {
+  const firstObject = fileToObject(firstFile);
+  const secondObject = fileToObject(secondFile);
+
+  const changeList = makeChangeList(firstObject, secondObject);
+  const result = makeResultString(changeList);
+
+  return result;
+};

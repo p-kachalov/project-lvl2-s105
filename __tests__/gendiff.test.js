@@ -1,4 +1,4 @@
-import gendiff from '../src/gendiff';
+import gendiff from 'gendiff-pk';
 
 test('result gendiff to equal expected', () => {
   const result = `
@@ -10,5 +10,5 @@ test('result gendiff to equal expected', () => {
  + verbose: true
 }
 `;
-expect(gendiff('./__tests__/test_data/before.json', './__tests__/test_data/after.json')).toBe(result);
+  expect(gendiff('./__tests__/fixtures/before.json', './__tests__/fixtures/after.json')).toBe(result);
 });
