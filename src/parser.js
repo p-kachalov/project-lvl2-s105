@@ -1,7 +1,9 @@
 import { readData, getType } from './reader';
+import jsyaml from 'js-yaml';
 
 const parser = {
   json: data => JSON.parse(data),
+  yml: data => jsyaml.load(data),
 };
 
 export default (dataPath) => {

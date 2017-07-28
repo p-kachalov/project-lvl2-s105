@@ -1,7 +1,6 @@
 import gendiff from '../src';
 
-test('result gendiff to equal expected', () => {
-  const result = `
+const result = `
 {
    host: hexlet.io
  + timeout: 20
@@ -10,5 +9,19 @@ test('result gendiff to equal expected', () => {
  + verbose: true
 }
 `;
+
+test('json->json to equal expected', () => {
   expect(gendiff('./__tests__/fixtures/before.json', './__tests__/fixtures/after.json')).toBe(result);
+});
+
+test('yml->yml to equal expected', () => {
+  expect(gendiff('./__tests__/fixtures/before.yml', './__tests__/fixtures/after.yml')).toBe(result);
+});
+
+test('json->yml to equal expected', () => {
+  expect(gendiff('./__tests__/fixtures/before.json', './__tests__/fixtures/after.yml')).toBe(result);
+});
+
+test('yml->json to equal expected', () => {
+  expect(gendiff('./__tests__/fixtures/before.yml', './__tests__/fixtures/after.json')).toBe(result);
 });
