@@ -5,9 +5,9 @@ export default (firstObject, secondObject) => {
   return keys.map((key) => {
     const oldValue = firstObject[key];
     const newValue = secondObject[key];
-    if (oldValue === newValue) return { name: key, flag: ' ', value: oldValue };
-    if (oldValue && newValue) return { name: key, flag: '+-', value: newValue, oldValue };
-    if (oldValue) return { name: key, flag: '-', value: oldValue };
-    return { name: key, flag: '+', value: newValue };
+    if (oldValue === newValue) return { key, newValue, oldValue, type: 'nochanged' };
+    if (oldValue && newValue) return { key, newValue, oldValue, type: 'changed' };
+    if (oldValue) return { key, newValue, oldValue, type: 'deleted' };
+    return { key, newValue, oldValue, type: 'added' };
   });
 };
