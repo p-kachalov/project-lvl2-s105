@@ -1,3 +1,12 @@
-import fs from 'fs';
+import { readData, getType } from './reader';
 
-export default file => JSON.parse(fs.readFileSync(file));
+const parser = {
+  json: data => JSON.parse(data),
+};
+
+export default (dataPath) => {
+  const data = readData(dataPath);
+  const type = getType(dataPath);
+  console.log(type);
+  return parser[type](data);
+};

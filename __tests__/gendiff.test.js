@@ -1,4 +1,4 @@
-import gendiff from '../dist';
+import gendiff from '../src';
 
 test('result gendiff to equal expected', () => {
   const result = `
