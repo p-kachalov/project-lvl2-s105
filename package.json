@@ -1,6 +1,6 @@
 {
   "name": "gendiff-pk",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Compares two configuration files and shows a difference.",
   "main": "dist/index.js",
   "bin": {
@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "commander": "^2.11.0",
+    "ini": "^1.3.4",
     "js-yaml": "^3.9.0",
     "lodash": "^4.17.4"
   }
