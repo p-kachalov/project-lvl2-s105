@@ -47,7 +47,21 @@ const renderPlain = (data, parent) =>
   }).join('');
 
 
+const renderJson = (data, lvl) => {
+  const template = {
+    unchanged: item => `${indent(lvl)}"${item.key}": "${item.type}",`,
+    changed: item => `${indent(lvl)}"${item.key}": "${item.type}",`,
+    added: item => `${indent(lvl)}"${item.key}": "${item.type}",`,
+    removed: item => `${indent(lvl)}"${item.key}": "${item.type}",`,
+    group: item => `${indent(lvl)}"${item.key}": ${renderJson(item.oldValue, lvl + 1)},`,
+  };
+
+  const dataString = data.map(item => template[item.type](item)).join('\n');
+  return '{\n'.concat(dataString).concat('\n').concat(`${indent(lvl - 1)}}`);
+};
+
 export default (data, format) => {
   if (format === 'plain') return '\n'.concat(renderPlain(data, ''));
+  if (format === 'json') return '\n'.concat(renderJson(data, 1)).concat('\n');
   return '\n'.concat(`${renderData(data, 0)}`).concat('\n');
 };

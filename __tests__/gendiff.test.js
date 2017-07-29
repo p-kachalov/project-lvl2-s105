@@ -48,6 +48,25 @@ Property 'group2' was removed
 Property 'group3' was added with value: complex value
 `;
 
+const jsonResult = `
+{
+    "common": {
+        "setting1": "unchanged",
+        "setting2": "removed",
+        "setting3": "unchanged",
+        "setting6": "removed",
+        "setting4": "added",
+        "setting5": "added",
+    },
+    "group1": {
+        "baz": "changed",
+        "foo": "unchanged",
+    },
+    "group2": "removed",
+    "group3": "added",
+}
+`;
+
 test('standart json->json to equal expected', () => {
   expect(gendiff('./__tests__/fixtures/before.json', './__tests__/fixtures/after.json')).toBe(result);
   expect(gendiff('./__tests__/fixtures/before-nested.json', './__tests__/fixtures/after-nested.json')).toBe(resultNested);
@@ -66,4 +85,8 @@ test('standart ini->ini to equal expected', () => {
 
 test('plain json->json to equal expected', () => {
   expect(gendiff('./__tests__/fixtures/before-nested.json', './__tests__/fixtures/after-nested.json', 'plain')).toBe(plainResult);
+});
+
+test('json json->json to equal expected', () => {
+  expect(gendiff('./__tests__/fixtures/before-nested.json', './__tests__/fixtures/after-nested.json', 'json')).toBe(jsonResult);
 });
