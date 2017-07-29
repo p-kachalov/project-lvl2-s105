@@ -1,10 +1,14 @@
-import fileToObject from './parser';
+import reader from './reader';
+import parser from './parser';
 import buildDiffAst from './ast-builder';
 import render from './render';
 
-export default (firstFile, secondFile) => {
-  const firstObject = fileToObject(firstFile);
-  const secondObject = fileToObject(secondFile);
+export default (firstFilePath, secondFilePath) => {
+  const firstFile = reader(firstFilePath);
+  const secondFile = reader(secondFilePath);
+
+  const firstObject = parser(firstFile.data, firstFile.type);
+  const secondObject = parser(secondFile.data, secondFile.type);
 
   const diffAst = buildDiffAst(firstObject, secondObject);
   return render(diffAst);
