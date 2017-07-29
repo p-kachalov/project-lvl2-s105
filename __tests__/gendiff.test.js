@@ -38,17 +38,32 @@ const resultNested = `
 }
 `;
 
-test('json->json to equal expected', () => {
+const plainResult = `
+Property 'common.setting2' was removed
+Property 'common.setting6' was removed
+Property 'common.setting4' was added with value: blah blah
+Property 'common.setting5' was added with value: complex value
+Property 'group1.baz' was updated. From 'bas' to 'bars'
+Property 'group2' was removed
+Property 'group3' was added with value: complex value
+`;
+
+test('standart json->json to equal expected', () => {
   expect(gendiff('./__tests__/fixtures/before.json', './__tests__/fixtures/after.json')).toBe(result);
   expect(gendiff('./__tests__/fixtures/before-nested.json', './__tests__/fixtures/after-nested.json')).toBe(resultNested);
 });
 
-test('yml->yml to equal expected', () => {
+test('standart yml->yml to equal expected', () => {
   expect(gendiff('./__tests__/fixtures/before.yml', './__tests__/fixtures/after.yml')).toBe(result);
   expect(gendiff('./__tests__/fixtures/before-nested.yml', './__tests__/fixtures/after-nested.yml')).toBe(resultNested);
 });
 
-test('ini->ini to equal expected', () => {
+test('standart ini->ini to equal expected', () => {
   expect(gendiff('./__tests__/fixtures/before.ini', './__tests__/fixtures/after.ini')).toBe(result);
   expect(gendiff('./__tests__/fixtures/before-nested.ini', './__tests__/fixtures/after-nested.ini')).toBe(resultNested);
+});
+
+
+test('plain json->json to equal expected', () => {
+  expect(gendiff('./__tests__/fixtures/before-nested.json', './__tests__/fixtures/after-nested.json', 'plain')).toBe(plainResult);
 });

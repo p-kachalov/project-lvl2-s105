@@ -3,7 +3,7 @@ import parser from './parser';
 import buildDiffAst from './ast-builder';
 import render from './render';
 
-export default (firstFilePath, secondFilePath) => {
+export default (firstFilePath, secondFilePath, format) => {
   const firstFile = reader(firstFilePath);
   const secondFile = reader(secondFilePath);
 
@@ -11,5 +11,5 @@ export default (firstFilePath, secondFilePath) => {
   const secondObject = parser(secondFile.data, secondFile.type);
 
   const diffAst = buildDiffAst(firstObject, secondObject);
-  return render(diffAst);
+  return render(diffAst, format);
 };

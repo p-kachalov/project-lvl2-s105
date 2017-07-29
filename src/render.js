@@ -34,4 +34,20 @@ const renderData = (data, lvl) => {
   return '{\n'.concat(dataString).concat('\n').concat(`${indent(lvl)}}`);
 };
 
-export default data => '\n'.concat(`${renderData(data, 0)}`).concat('\n');
+const renderPlainValue = value => (lodash.isObject(value) ? 'complex value' : value);
+
+const renderPlain = (data, parent) =>
+  data.map((item) => {
+    if (item.type === 'unchanged') return '';
+    if (item.type === 'group') return renderPlain(item.oldValue, `${item.key}.`);
+    if (item.type === 'added') return `Property '${parent}${item.key}' was added with value: ${renderPlainValue(item.newValue)}`.concat('\n');
+    if (item.type === 'removed') return `Property '${parent}${item.key}' was removed`.concat('\n');
+    if (item.type === 'changed') return `Property '${parent}${item.key}' was updated. From '${item.oldValue}' to '${item.newValue}'`.concat('\n');
+    return '';
+  }).join('');
+
+
+export default (data, format) => {
+  if (format === 'plain') return '\n'.concat(renderPlain(data, ''));
+  return '\n'.concat(`${renderData(data, 0)}`).concat('\n');
+};
