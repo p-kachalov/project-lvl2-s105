@@ -2,11 +2,11 @@ import gendiff from '../src';
 
 const result = `
 {
-   host: hexlet.io
- + timeout: 20
- - timeout: 50
- - proxy: 123.234.53.22
- + verbose: true
+    host: hexlet.io
+  + timeout: 20
+  - timeout: 50
+  - proxy: 123.234.53.22
+  + verbose: true
 }
 `;
 
