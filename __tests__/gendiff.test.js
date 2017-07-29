@@ -43,44 +43,12 @@ test('json->json to equal expected', () => {
   expect(gendiff('./__tests__/fixtures/before-nested.json', './__tests__/fixtures/after-nested.json')).toBe(resultNested);
 });
 
-test('json->yml to equal expected', () => {
-  expect(gendiff('./__tests__/fixtures/before.json', './__tests__/fixtures/after.yml')).toBe(result);
-  expect(gendiff('./__tests__/fixtures/before-nested.json', './__tests__/fixtures/after-nested.yml')).toBe(resultNested);
-});
-
-test('json->ini to equal expected', () => {
-  expect(gendiff('./__tests__/fixtures/before.json', './__tests__/fixtures/after.ini')).toBe(result);
-  expect(gendiff('./__tests__/fixtures/before-nested.json', './__tests__/fixtures/after-nested.ini')).toBe(resultNested);
-});
-
-
 test('yml->yml to equal expected', () => {
   expect(gendiff('./__tests__/fixtures/before.yml', './__tests__/fixtures/after.yml')).toBe(result);
   expect(gendiff('./__tests__/fixtures/before-nested.yml', './__tests__/fixtures/after-nested.yml')).toBe(resultNested);
 });
 
-test('yml->json to equal expected', () => {
-  expect(gendiff('./__tests__/fixtures/before.yml', './__tests__/fixtures/after.json')).toBe(result);
-  expect(gendiff('./__tests__/fixtures/before-nested.yml', './__tests__/fixtures/after-nested.json')).toBe(resultNested);
-});
-
-test('yml->ini to equal expected', () => {
-  expect(gendiff('./__tests__/fixtures/before.yml', './__tests__/fixtures/after.ini')).toBe(result);
-  expect(gendiff('./__tests__/fixtures/before-nested.yml', './__tests__/fixtures/after-nested.ini')).toBe(resultNested);
-});
-
-
 test('ini->ini to equal expected', () => {
   expect(gendiff('./__tests__/fixtures/before.ini', './__tests__/fixtures/after.ini')).toBe(result);
   expect(gendiff('./__tests__/fixtures/before-nested.ini', './__tests__/fixtures/after-nested.ini')).toBe(resultNested);
-});
-
-test('ini->json to equal expected', () => {
-  expect(gendiff('./__tests__/fixtures/before.ini', './__tests__/fixtures/after.json')).toBe(result);
-  expect(gendiff('./__tests__/fixtures/before-nested.ini', './__tests__/fixtures/after-nested.json')).toBe(resultNested);
-});
-
-test('ini->yml to equal expected', () => {
-  expect(gendiff('./__tests__/fixtures/before.ini', './__tests__/fixtures/after.yml')).toBe(result);
-  expect(gendiff('./__tests__/fixtures/before-nested.ini', './__tests__/fixtures/after-nested.yml')).toBe(resultNested);
 });
