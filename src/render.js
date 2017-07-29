@@ -7,7 +7,10 @@ const flag = {
 };
 
 const renderData = (data) => {
-  const renderValue = value => (lodash.isArray(value) ? renderData(value) : value);
+  const renderValue = (value) => {
+    if (lodash.isArray(value)) return renderData(value);
+    return value;
+  };
 
   const template = {
     unchanged: item => `${flag.unchanged} ${item.key}: ${renderValue(item.oldValue)}`,
@@ -17,7 +20,7 @@ const renderData = (data) => {
   };
 
   const dataString = data.map(item => template[item.type](item)).join('\n ');
-  return '\n{\n '.concat(dataString).concat('\n}\n');
+  return '{\n '.concat(dataString).concat('\n}');
 };
 
-export default renderData;
+export default data => '\n'.concat(`${renderData(data)}`).concat('\n');
