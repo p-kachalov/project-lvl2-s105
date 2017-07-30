@@ -15,7 +15,7 @@ const jsonRender = (data, lvl) => {
     changed: item => `${indent(lvl)}"${item.key}": "${item.type}",`,
     added: item => `${indent(lvl)}"${item.key}": "${item.type}",`,
     removed: item => `${indent(lvl)}"${item.key}": "${item.type}",`,
-    group: item => `${indent(lvl)}"${item.key}": ${jsonRender(item.oldValue, lvl + 1)},`,
+    nested: item => `${indent(lvl)}"${item.key}": ${jsonRender(item.oldValue, lvl + 1)},`,
   };
 
   const dataString = data.map(item => template[item.type](item)).join('\n');

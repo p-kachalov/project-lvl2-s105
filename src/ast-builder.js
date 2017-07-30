@@ -25,7 +25,7 @@ const buildAst = (firstObject, secondObject) => {
   };
 
   const makeNode = (key, type) => {
-    if (type === 'group') {
+    if (type === 'nested') {
       const oldValue = buildAst(firstObject[key], secondObject[key]);
       const newValue = buildAst(firstObject[key], secondObject[key]);
       return { key, newValue, oldValue, type };
@@ -50,7 +50,7 @@ const buildAst = (firstObject, secondObject) => {
     if (status.wasAdded(key)) return makeNode(key, 'added');
     if (status.wasChanged(key)) return makeNode(key, 'changed');
     if (status.wasUnchanged(key)) return makeNode(key, 'unchanged');
-    return makeNode(key, 'group');
+    return makeNode(key, 'nested');
   });
 };
 

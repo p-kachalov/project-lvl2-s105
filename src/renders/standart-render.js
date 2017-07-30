@@ -27,7 +27,7 @@ const standartRender = (data, lvl) => {
     changed: item => `  ${indent(lvl)}${flag.added} ${item.key}: ${renderValue(item.newValue)}`.concat('\n').concat(`  ${indent(lvl)}${flag.removed} ${item.key}: ${renderValue(item.oldValue)}`),
     added: item => `  ${indent(lvl)}${flag.added} ${item.key}: ${renderValue(item.newValue)}`,
     removed: item => `  ${indent(lvl)}${flag.removed} ${item.key}: ${renderValue(item.oldValue)}`,
-    group: item => `  ${indent(lvl)}${flag.unchanged} ${item.key}: ${renderValue(item.oldValue)}`,
+    nested: item => `  ${indent(lvl)}${flag.unchanged} ${item.key}: ${renderValue(item.oldValue)}`,
   };
 
   const dataString = data.map(item => template[item.type](item)).join('\n');
