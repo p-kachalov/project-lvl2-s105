@@ -1,7 +1,7 @@
 import reader from './reader';
 import parser from './parser';
 import buildDiffAst from './ast-builder';
-import render from './render';
+import render from './renders';
 
 export default (firstFilePath, secondFilePath, format) => {
   const firstFile = reader(firstFilePath);
