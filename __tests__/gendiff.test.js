@@ -54,23 +54,27 @@ const jsonResult = `
   "key": "host",
   "newValue": "hexlet.io",
   "oldValue": "hexlet.io",
-  "type": "unchanged"
+  "type": "unchanged",
+  "children": []
  },
  {
   "key": "timeout",
   "newValue": 20,
   "oldValue": 50,
-  "type": "changed"
+  "type": "changed",
+  "children": []
  },
  {
   "key": "proxy",
   "oldValue": "123.234.53.22",
-  "type": "removed"
+  "type": "removed",
+  "children": []
  },
  {
   "key": "verbose",
   "newValue": true,
-  "type": "added"
+  "type": "added",
+  "children": []
  }
 ]
 `;

@@ -1,45 +1,43 @@
 import lodash from 'lodash';
 
-const buildAst = (firstObject, secondObject) => {
-  const keys = lodash.union(Object.keys(firstObject), Object.keys(secondObject));
-  const isValuesObjects = key =>
+const makeNode = (key, type, newValue, oldValue, children = []) =>
+  ({ key, newValue, oldValue, type, children });
+
+const isValuesObjects = (key, firstObject, secondObject) =>
     lodash.isObject(firstObject[key]) || lodash.isObject(secondObject[key]);
 
-  const isValuesEqual = key =>
-    firstObject[key] === secondObject[key];
+const isValuesEqual = (key, firstObject, secondObject) =>
+  firstObject[key] === secondObject[key];
 
-  const status = {
-    wasRemoved: key =>
-      lodash.has(firstObject, key) && !lodash.has(secondObject, key),
+const status = {
+  wasRemoved: (key, firstObject, secondObject) =>
+    lodash.has(firstObject, key) && !lodash.has(secondObject, key),
 
-    wasAdded: key =>
-      !lodash.has(firstObject, key) && lodash.has(secondObject, key),
+  wasAdded: (key, firstObject, secondObject) =>
+    !lodash.has(firstObject, key) && lodash.has(secondObject, key),
 
-    wasChanged: key =>
-      lodash.has(firstObject, key) && lodash.has(secondObject, key) &&
-      !(isValuesEqual(key) || isValuesObjects(key)),
+  wasChanged: (key, firstObject, secondObject) =>
+    lodash.has(firstObject, key) && lodash.has(secondObject, key) &&
+    !(isValuesEqual(key, firstObject, secondObject) ||
+      isValuesObjects(key, firstObject, secondObject)),
 
-    wasUnchanged: key =>
-      (lodash.has(firstObject, key) && lodash.has(secondObject, key)) &&
-      (isValuesEqual(key) && !(isValuesObjects(key))),
-  };
+  wasUnchanged: (key, firstObject, secondObject) =>
+    (lodash.has(firstObject, key) && lodash.has(secondObject, key)) &&
+    (isValuesEqual(key, firstObject, secondObject) &&
+      !(isValuesObjects(key, firstObject, secondObject))),
+};
 
-  const makeNode = (key, type) => {
-    if (type === 'nested') {
-      const children = buildAst(firstObject[key], secondObject[key]);
-      return { key, children, type };
-    }
+
+const buildAst = (firstObject, secondObject) => {
+  const keys = lodash.union(Object.keys(firstObject), Object.keys(secondObject));
+  return keys.map((key) => {
     const newValue = secondObject[key];
     const oldValue = firstObject[key];
-    return { key, newValue, oldValue, type };
-  };
-
-  return keys.map((key) => {
-    if (status.wasRemoved(key)) return makeNode(key, 'removed');
-    if (status.wasAdded(key)) return makeNode(key, 'added');
-    if (status.wasChanged(key)) return makeNode(key, 'changed');
-    if (status.wasUnchanged(key)) return makeNode(key, 'unchanged');
-    return makeNode(key, 'nested');
+    if (status.wasRemoved(key, firstObject, secondObject)) return makeNode(key, 'removed', newValue, oldValue);
+    if (status.wasAdded(key, firstObject, secondObject)) return makeNode(key, 'added', newValue, oldValue);
+    if (status.wasChanged(key, firstObject, secondObject)) return makeNode(key, 'changed', newValue, oldValue);
+    if (status.wasUnchanged(key, firstObject, secondObject)) return makeNode(key, 'unchanged', newValue, oldValue);
+    return makeNode(key, 'nested', newValue, oldValue, buildAst(firstObject[key], secondObject[key]));
   });
 };
 
