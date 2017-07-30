@@ -1,6 +1,6 @@
 {
   "name": "gendiff-pk",
-  "version": "0.3.3",
+  "version": "0.3.5",
   "description": "Compares two configuration files and shows a difference.",
   "main": "dist/index.js",
   "bin": {
