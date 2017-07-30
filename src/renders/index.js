@@ -1,9 +1,10 @@
 import standartRender from './standart';
 import plainRender from './plain';
+import jsonRender from './json';
 
 const render = {
   plain: plainRender,
-  json: data => `\n${JSON.stringify(data, null, ' ')}\n`,
+  json: jsonRender,
   standart: standartRender,
 };
 
