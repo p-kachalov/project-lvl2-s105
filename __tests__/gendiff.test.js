@@ -49,22 +49,30 @@ Property 'group3' was added with value: complex value
 `;
 
 const jsonResult = `
-{
-    "common": {
-        "setting1": "unchanged",
-        "setting2": "removed",
-        "setting3": "unchanged",
-        "setting6": "removed",
-        "setting4": "added",
-        "setting5": "added",
-    },
-    "group1": {
-        "baz": "changed",
-        "foo": "unchanged",
-    },
-    "group2": "removed",
-    "group3": "added",
-}
+[
+ {
+  "key": "host",
+  "newValue": "hexlet.io",
+  "oldValue": "hexlet.io",
+  "type": "unchanged"
+ },
+ {
+  "key": "timeout",
+  "newValue": 20,
+  "oldValue": 50,
+  "type": "changed"
+ },
+ {
+  "key": "proxy",
+  "oldValue": "123.234.53.22",
+  "type": "removed"
+ },
+ {
+  "key": "verbose",
+  "newValue": true,
+  "type": "added"
+ }
+]
 `;
 
 test('result to equal expected', () => {
@@ -81,5 +89,5 @@ test('plain json->json to equal expected', () => {
 });
 
 test('json json->json to equal expected', () => {
-  expect(gendiff('./__tests__/fixtures/before-nested.json', './__tests__/fixtures/after-nested.json', 'json')).toBe(jsonResult);
+  expect(gendiff('./__tests__/fixtures/before.json', './__tests__/fixtures/after.json', 'json')).toBe(jsonResult);
 });

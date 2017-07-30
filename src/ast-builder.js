@@ -26,19 +26,8 @@ const buildAst = (firstObject, secondObject) => {
 
   const makeNode = (key, type) => {
     if (type === 'nested') {
-      const oldValue = buildAst(firstObject[key], secondObject[key]);
-      const newValue = buildAst(firstObject[key], secondObject[key]);
-      return { key, newValue, oldValue, type };
-    }
-    if (type === 'removed') {
-      const oldValue = lodash.isObject(firstObject[key]) ?
-        buildAst(firstObject[key], firstObject[key]) : firstObject[key];
-      return { key, newValue: oldValue, oldValue, type };
-    }
-    if (type === 'added') {
-      const newValue = lodash.isObject(secondObject[key]) ?
-        buildAst(secondObject[key], secondObject[key]) : secondObject[key];
-      return { key, newValue, oldValue: newValue, type };
+      const children = buildAst(firstObject[key], secondObject[key]);
+      return { key, children, type };
     }
     const newValue = secondObject[key];
     const oldValue = firstObject[key];

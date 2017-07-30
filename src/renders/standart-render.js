@@ -16,18 +16,27 @@ const indent = (lvl) => {
   return makeIndent('', spaceCount);
 };
 
+const renderObject = (objectValue, lvl) => {
+  const keys = Object.keys(objectValue);
+  const resultString = keys.map((key) => {
+    if (lodash.isObject(objectValue[key])) return renderObject(objectValue[key], lvl + 1);
+    return `${indent(lvl)}    ${key}: ${objectValue[key]}`;
+  }).join('\n');
+  return '{\n'.concat(resultString).concat('\n').concat(`${indent(lvl)}}`);
+};
+
 const standartRender = (data, lvl) => {
-  const renderValue = (value) => {
-    if (lodash.isArray(value)) return standartRender(value, lvl + 1);
-    return value;
+  const renderValue = (value, type) => {
+    if (type === 'nested') return standartRender(value, lvl + 1);
+    return (lodash.isObject(value)) ? renderObject(value, lvl + 1) : value;
   };
 
   const template = {
-    unchanged: item => `  ${indent(lvl)}${flag.unchanged} ${item.key}: ${renderValue(item.oldValue)}`,
-    changed: item => `  ${indent(lvl)}${flag.added} ${item.key}: ${renderValue(item.newValue)}`.concat('\n').concat(`  ${indent(lvl)}${flag.removed} ${item.key}: ${renderValue(item.oldValue)}`),
-    added: item => `  ${indent(lvl)}${flag.added} ${item.key}: ${renderValue(item.newValue)}`,
-    removed: item => `  ${indent(lvl)}${flag.removed} ${item.key}: ${renderValue(item.oldValue)}`,
-    nested: item => `  ${indent(lvl)}${flag.unchanged} ${item.key}: ${renderValue(item.oldValue)}`,
+    unchanged: item => `  ${indent(lvl)}${flag.unchanged} ${item.key}: ${renderValue(item.oldValue, item.type)}`,
+    changed: item => `  ${indent(lvl)}${flag.added} ${item.key}: ${renderValue(item.newValue, item.type)}`.concat('\n').concat(`  ${indent(lvl)}${flag.removed} ${item.key}: ${renderValue(item.oldValue, item.type)}`),
+    added: item => `  ${indent(lvl)}${flag.added} ${item.key}: ${renderValue(item.newValue, item.type)}`,
+    removed: item => `  ${indent(lvl)}${flag.removed} ${item.key}: ${renderValue(item.oldValue, item.type)}`,
+    nested: item => `  ${indent(lvl)}${flag.unchanged} ${item.key}: ${renderValue(item.children, item.type)}`,
   };
 
   const dataString = data.map(item => template[item.type](item)).join('\n');
