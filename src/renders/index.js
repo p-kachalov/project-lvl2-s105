@@ -1,5 +1,5 @@
-import standartRender from './standart-render';
-import plainRender from './plain-render';
+import standartRender from './standart';
+import plainRender from './plain';
 
 const render = {
   plain: plainRender,

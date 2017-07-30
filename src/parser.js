@@ -4,6 +4,7 @@ import ini from 'ini';
 const parser = {
   json: data => JSON.parse(data),
   yml: data => jsyaml.load(data),
+  yaml: data => jsyaml.load(data),
   ini: data => ini.parse(data),
 };
 
