@@ -31,12 +31,14 @@ const standartRender = (data, lvl) => {
     return (lodash.isObject(value)) ? renderObject(value, lvl + 1) : value;
   };
 
+  const makeReportString = (flagString, key, value, type) => `  ${indent(lvl)}${flagString} ${key}: ${renderValue(value, type)}`;
+
   const template = {
-    unchanged: item => `  ${indent(lvl)}${flag.unchanged} ${item.key}: ${renderValue(item.oldValue, item.type)}`,
-    changed: item => `  ${indent(lvl)}${flag.added} ${item.key}: ${renderValue(item.newValue, item.type)}\n  ${indent(lvl)}${flag.removed} ${item.key}: ${renderValue(item.oldValue, item.type)}`,
-    added: item => `  ${indent(lvl)}${flag.added} ${item.key}: ${renderValue(item.newValue, item.type)}`,
-    removed: item => `  ${indent(lvl)}${flag.removed} ${item.key}: ${renderValue(item.oldValue, item.type)}`,
-    nested: item => `  ${indent(lvl)}${flag.unchanged} ${item.key}: ${renderValue(item.children, item.type)}`,
+    unchanged: item => makeReportString(flag.unchanged, item.key, item.oldValue, item.type),
+    changed: item => `${makeReportString(flag.added, item.key, item.newValue, item.type)}\n${makeReportString(flag.removed, item.key, item.oldValue, item.type)}`,
+    added: item => makeReportString(flag.added, item.key, item.newValue, item.type),
+    removed: item => makeReportString(flag.removed, item.key, item.oldValue, item.type),
+    nested: item => makeReportString(flag.unchanged, item.key, item.children, item.type),
   };
 
   const dataString = data.map(item => template[item.type](item)).join('\n');
