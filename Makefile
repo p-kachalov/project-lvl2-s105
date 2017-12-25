@@ -5,7 +5,7 @@ start:
 	npm run babel-node -- src/bin/gendiff.js
 
 build:
-	npm build
+	npm run build
 
 test:
 	npm test
